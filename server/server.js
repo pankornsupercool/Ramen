@@ -6,6 +6,8 @@ require("dotenv").config()
 
 const app = express()
 
+const blogRoute = require("./route/blog")
+
 //connect mongoDB Atlas
 mongoose.connect(process.env.DATABASE, {
     useNewUrlParser: true,
@@ -20,11 +22,9 @@ app.use(cors())
 app.use(morgan("dev"))
 
 //route
-app.get("*", (req, res) => {
-    res.json({
-        data: "message from server"
-    })
-})
+
+app.use("/api", blogRoute)
+
 
 const port = process.env.PORT || 8080
 app.listen(port, () => console.log(`start server in port ${port}`))
